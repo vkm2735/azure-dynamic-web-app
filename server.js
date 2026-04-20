@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-app.post("/add-user", async (req, res) => {
+app.post("/api/add-user", async (req, res) => {
   try {
     const { name, email } = req.body;
     console.log(name, email);
@@ -40,7 +40,7 @@ app.post("/add-user", async (req, res) => {
 });
 
 // 🔹  API: Get users (same logic)
-app.get("/users", async (req, res) => {
+app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
     res.send(users);
