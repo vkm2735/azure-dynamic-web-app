@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Node + RDS App</title>
+  </head>
+  <body>
+    <h2>Add User</h2>
+    <input id="name" placeholder="Name" />
+    <input id="email" placeholder="Email" />
+    <button onclick="addUser()">Add</button>
+
+    <h2>Users</h2>
+    <button onclick="loadUsers()">Load Users</button>
+    <ul id="list"></ul>
+
+    <script>
+      const API = "window.location.origin";
+
+      function addUser() {
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+
+        fetch(API + "/add-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: nameInput.value,
+            email: emailInput.value,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => alert(data.message));
+      }
+
+      function loadUsers() {
+        fetch(API + "/users")
+          .then((res) => res.json())
+          .then((data) => {
+            list.innerHTML = "";
+            data.forEach((u) => {
+              list.innerHTML += `<li>${u.name} - ${u.email}</li>`;
+            });
+          });
+      }
+    </script>
+  </body>
+</html>
